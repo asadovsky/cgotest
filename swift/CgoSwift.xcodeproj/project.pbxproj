@@ -11,6 +11,7 @@
 		2E6194C21CC2CB1000858207 /* golib_arm64_ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E6194BE1CC2CB1000858207 /* golib_arm64_ios.a */; };
 		2E6194C31CC2CB1000858207 /* golib.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E6194BF1CC2CB1000858207 /* golib.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2E6194C41CC2CB1000858207 /* types.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E6194C01CC2CB1000858207 /* types.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2E6194CA1CC2CE3800858207 /* Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E6194C91CC2CE3800858207 /* Types.swift */; };
 		2EB907971CC2CA50005880F0 /* CgoSwift.h in Headers */ = {isa = PBXBuildFile; fileRef = 2EB907961CC2CA50005880F0 /* CgoSwift.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2EB9079E1CC2CA50005880F0 /* CgoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EB907931CC2CA50005880F0 /* CgoSwift.framework */; };
 		2EB907A31CC2CA50005880F0 /* CgoSwiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB907A21CC2CA50005880F0 /* CgoSwiftTests.swift */; };
@@ -31,6 +32,7 @@
 		2E6194BE1CC2CB1000858207 /* golib_arm64_ios.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = golib_arm64_ios.a; path = ../../c/golib_arm64_ios.a; sourceTree = "<group>"; };
 		2E6194BF1CC2CB1000858207 /* golib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = golib.h; path = ../../c/golib.h; sourceTree = "<group>"; };
 		2E6194C01CC2CB1000858207 /* types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = types.h; path = ../../c/types.h; sourceTree = "<group>"; };
+		2E6194C91CC2CE3800858207 /* Types.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Types.swift; sourceTree = "<group>"; };
 		2EB907931CC2CA50005880F0 /* CgoSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CgoSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2EB907961CC2CA50005880F0 /* CgoSwift.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CgoSwift.h; sourceTree = "<group>"; };
 		2EB907981CC2CA50005880F0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -86,6 +88,7 @@
 				2E6194BD1CC2CB1000858207 /* golib_amd64_darwin.a */,
 				2E6194BE1CC2CB1000858207 /* golib_arm64_ios.a */,
 				2E6194BF1CC2CB1000858207 /* golib.h */,
+				2E6194C91CC2CE3800858207 /* Types.swift */,
 				2E6194C01CC2CB1000858207 /* types.h */,
 			);
 			path = CgoSwift;
@@ -209,6 +212,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2E6194CA1CC2CE3800858207 /* Types.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -325,6 +329,7 @@
 		2EB907A81CC2CA50005880F0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -335,12 +340,14 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.example.CgoSwift;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
 		2EB907A91CC2CA50005880F0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
