@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2E6194C11CC2CB1000858207 /* golib_amd64_darwin.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E6194BD1CC2CB1000858207 /* golib_amd64_darwin.a */; };
+		2E6194C21CC2CB1000858207 /* golib_arm64_ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E6194BE1CC2CB1000858207 /* golib_arm64_ios.a */; };
+		2E6194C31CC2CB1000858207 /* golib.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E6194BF1CC2CB1000858207 /* golib.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2E6194C41CC2CB1000858207 /* types.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E6194C01CC2CB1000858207 /* types.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2EB907971CC2CA50005880F0 /* CgoSwift.h in Headers */ = {isa = PBXBuildFile; fileRef = 2EB907961CC2CA50005880F0 /* CgoSwift.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2EB9079E1CC2CA50005880F0 /* CgoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EB907931CC2CA50005880F0 /* CgoSwift.framework */; };
 		2EB907A31CC2CA50005880F0 /* CgoSwiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB907A21CC2CA50005880F0 /* CgoSwiftTests.swift */; };
@@ -23,6 +27,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2E6194BD1CC2CB1000858207 /* golib_amd64_darwin.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = golib_amd64_darwin.a; path = ../../c/golib_amd64_darwin.a; sourceTree = "<group>"; };
+		2E6194BE1CC2CB1000858207 /* golib_arm64_ios.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = golib_arm64_ios.a; path = ../../c/golib_arm64_ios.a; sourceTree = "<group>"; };
+		2E6194BF1CC2CB1000858207 /* golib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = golib.h; path = ../../c/golib.h; sourceTree = "<group>"; };
+		2E6194C01CC2CB1000858207 /* types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = types.h; path = ../../c/types.h; sourceTree = "<group>"; };
 		2EB907931CC2CA50005880F0 /* CgoSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CgoSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2EB907961CC2CA50005880F0 /* CgoSwift.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CgoSwift.h; sourceTree = "<group>"; };
 		2EB907981CC2CA50005880F0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -36,6 +44,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2E6194C21CC2CB1000858207 /* golib_arm64_ios.a in Frameworks */,
+				2E6194C11CC2CB1000858207 /* golib_amd64_darwin.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -73,6 +83,10 @@
 			children = (
 				2EB907961CC2CA50005880F0 /* CgoSwift.h */,
 				2EB907981CC2CA50005880F0 /* Info.plist */,
+				2E6194BD1CC2CB1000858207 /* golib_amd64_darwin.a */,
+				2E6194BE1CC2CB1000858207 /* golib_arm64_ios.a */,
+				2E6194BF1CC2CB1000858207 /* golib.h */,
+				2E6194C01CC2CB1000858207 /* types.h */,
 			);
 			path = CgoSwift;
 			sourceTree = "<group>";
@@ -93,6 +107,8 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2E6194C41CC2CB1000858207 /* types.h in Headers */,
+				2E6194C31CC2CB1000858207 /* golib.h in Headers */,
 				2EB907971CC2CA50005880F0 /* CgoSwift.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -377,6 +393,7 @@
 				2EB907A91CC2CA50005880F0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		2EB907AA1CC2CA50005880F0 /* Build configuration list for PBXNativeTarget "CgoSwiftTests" */ = {
 			isa = XCConfigurationList;
@@ -385,6 +402,7 @@
 				2EB907AC1CC2CA50005880F0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
