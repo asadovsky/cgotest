@@ -1,5 +1,4 @@
 SHELL := /bin/bash -euo pipefail
-PATH := node_modules/.bin:$(PATH)
 GOPATH := $(shell pwd)/go:$(JIRI_ROOT)/release/go
 
 .DELETE_ON_ERROR:
@@ -12,8 +11,8 @@ build-shared: $(shell find go/src/cgo)
 
 .PHONY: build-archive
 build-archive: $(shell find go/src/cgo)
+	go env GOPATH
 	go build -buildmode=c-archive -o c/golib.a cgo
-	jiri go -target=amd64-darwin build -buildmode=c-archive -tags=ios -o c/golib_amd64_darwin.a cgo
 	jiri go -target=amd64-ios build -buildmode=c-archive -tags=ios -o c/golib_amd64_ios.a cgo
 	jiri go -target=arm64-ios build -buildmode=c-archive -tags=ios -o c/golib_arm64_ios.a cgo
 	cp go/src/cgo/types.h c/
