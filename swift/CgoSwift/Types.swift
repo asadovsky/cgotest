@@ -1,14 +1,9 @@
-// Note: Imported C structs have a default initializer in Swift that initializes all of the struct's
-// fields to zero.
+// Note: Imported C structs have a default initializer in Swift that zero-initializes all fields.
 // https://developer.apple.com/library/ios/releasenotes/DeveloperTools/RN-Xcode/Chapters/xc6_release_notes.html
-
-// TODO:
-// - Change C struct names to XString, XBytes, XVError, XCustom
-// - Change XFoo extension to implement both init(Foo) and toFoo()
 
 import Foundation
 
-extension Str {
+extension XString {
   init?(s: String) {
     // TODO: If possible, make one copy instead of two, e.g. using s.getCString.
     guard let data = s.dataUsingEncoding(NSUTF8StringEncoding) else {
@@ -24,7 +19,7 @@ extension Str {
     self.n = Int32(n)
   }
 
-  // Returns a String that takes ownership of the memory associated with this object.
+  // Return value takes ownership of the memory associated with this object.
   func toString() -> String? {
     if p == nil {
       return nil
@@ -33,7 +28,7 @@ extension Str {
   }
 }
 
-extension Arr {
+extension XBytes {
   // TODO: Use [UInt8] instead of NSData?
   init?(data: NSData) {
     let p = malloc(data.length)
@@ -46,7 +41,7 @@ extension Arr {
     self.n = Int32(n)
   }
 
-  // Returns an NSData that takes ownership of the memory associated with this object.
+  // Return value takes ownership of the memory associated with this object.
   func toNSData() -> NSData? {
     if p == nil {
       return nil
@@ -55,32 +50,45 @@ extension Arr {
   }
 }
 
-extension Foo {
-  init?(f: SwiftFoo) {
-    guard let str = Str(s: f.str) else {
+// Note, we don't define init?(VError) since we never pass Swift VError objects to Go.
+extension XVError {
+  // Return value takes ownership of the memory associated with this object.
+  func toVError() -> VError? {
+    if id.p == nil {
       return nil
     }
-    guard let arr = Arr(data: f.arr) else {
+    // Take ownership of all memory before checking optionals.
+    let vId = id.toString(), vMsg = msg.toString(), vStack = stack.toString()
+    // TODO: Stop requiring id, msg, and stack to be valid UTF8?
+    return VError(id: vId!, actionCode: actionCode, msg: vMsg!, stack: vStack!)
+  }
+}
+
+extension XFoo {
+  init?(f: Foo) {
+    guard let str = XString(s: f.str) else {
+      return nil
+    }
+    guard let arr = XBytes(data: f.arr) else {
       return nil
     }
     self.init(str: str, arr: arr, num: f.num)
   }
+
+  func toFoo() -> Foo? {
+    // Take ownership of all memory before checking optionals.
+    let vStr = str.toString(), vArr = arr.toNSData()
+    if vStr == nil || vArr == nil {
+      return nil
+    }
+    return Foo(str: vStr!, arr: vArr!, num: num)
+  }
 }
 
-public struct SwiftFoo: CustomStringConvertible {
+public struct Foo: CustomStringConvertible {
   public let str: String
   public let arr: NSData
   public let num: Int32
-
-  init(str: String, arr: NSData, num: Int32) {
-    self.str = str
-    self.arr = arr
-    self.num = num
-  }
-
-  init(f: Foo) {
-    self.init(str: f.str.toString()!, arr: f.arr.toNSData()!, num: f.num)
-  }
 
   public var description: String {
     let arrDesc = String(data: arr, encoding: NSUTF8StringEncoding)!
@@ -94,22 +102,10 @@ public struct VError: ErrorType {
   public let msg: String
   public let stack: String
 
-  // Takes ownership of the memory associated with e.
-  init?(e: Err) {
-    if e.id.p == nil {
-      return nil
-    }
-    // TODO: Stop requiring id, msg, and stack to be valid UTF8?
-    id = e.id.toString()!
-    actionCode = e.actionCode
-    msg = e.msg.toString()!
-    stack = e.stack.toString()!
-  }
-
-  static func maybeThrow<T>(@noescape f: UnsafeMutablePointer<Err> -> T) throws -> T {
-    var e = Err()
+  static func maybeThrow<T>(@noescape f: UnsafeMutablePointer<XVError> -> T) throws -> T {
+    var e = XVError()
     let res = f(&e)
-    if let err = VError(e: e) {
+    if let err = e.toVError() {
       throw err
     }
     return res

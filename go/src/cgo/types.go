@@ -13,53 +13,53 @@ import (
 import "C"
 
 ////////////////////////////////////////
-// C.Str
+// C.XString
 
-func (c *C.Str) free() {
-	C.free(unsafe.Pointer(c.p))
+func (x *C.XString) free() {
+	C.free(unsafe.Pointer(x.p))
 }
 
-func (c *C.Str) init(s string) {
-	c.p = C.CString(s)
-	c.n = C.int(len(s))
-}
-
-////////////////////////////////////////
-// C.Arr
-
-func (c *C.Arr) free() {
-	C.free(c.p)
-}
-
-func (c *C.Arr) init(b []byte) {
-	c.p = unsafe.Pointer(C.CString(string(b)))
-	c.n = C.int(len(b))
+func (x *C.XString) init(s string) {
+	x.p = C.CString(s)
+	x.n = C.int(len(s))
 }
 
 ////////////////////////////////////////
-// C.Err
+// C.XBytes
 
-func newErr() *C.Err {
-	return (*C.Err)(C.malloc(C.sizeof_Err))
+func (x *C.XBytes) free() {
+	C.free(x.p)
 }
 
-func (c *C.Err) init(e error) {
-	c.id.init(string(verror.ErrorID(e)))
-	c.actionCode = C.uint(verror.Action(e))
-	c.msg.init(e.Error())
-	c.stack.init(verror.Stack(e).String())
+func (x *C.XBytes) init(b []byte) {
+	x.p = unsafe.Pointer(C.CString(string(b)))
+	x.n = C.int(len(b))
 }
 
 ////////////////////////////////////////
-// C.Foo
+// C.XVError
 
-func (c *C.Foo) free() {
-	c.str.free()
-	c.arr.free()
+func newXVError() *C.XVError {
+	return (*C.XVError)(C.malloc(C.sizeof_XVError))
 }
 
-func (c *C.Foo) init(str string, arr []byte, num int32) {
-	c.str.init(str)
-	c.arr.init(arr)
-	c.num = C.int(num)
+func (x *C.XVError) init(e error) {
+	x.id.init(string(verror.ErrorID(e)))
+	x.actionCode = C.uint(verror.Action(e))
+	x.msg.init(e.Error())
+	x.stack.init(verror.Stack(e).String())
+}
+
+////////////////////////////////////////
+// C.XFoo
+
+func (x *C.XFoo) free() {
+	x.str.free()
+	x.arr.free()
+}
+
+func (x *C.XFoo) init(str string, arr []byte, num int32) {
+	x.str.init(str)
+	x.arr.init(arr)
+	x.num = C.int(num)
 }

@@ -1,28 +1,32 @@
 #include <stdint.h>
 
-// String.
+// string
 typedef struct {
   const char* p;
   int n;
-} Str;
+} XString;
 
-// Byte array.
+// []byte
 typedef struct {
   const void* p;
   int n;
-} Arr;
+} XBytes;
 
-// VError.
+// verror.E
 typedef struct {
-  Str id;
+  XString id;
   unsigned int actionCode;
-  Str msg;
-  Str stack;
-} Err;
+  XString msg;
+  XString stack;
+} XVError;
 
-// Custom struct, containing a string, a byte array, and an int.
+// type Foo struct {
+//   str string
+//   arr []byte
+//   num int
+// }
 typedef struct {
-  Str str;
-  Arr arr;
+  XString str;
+  XBytes arr;
   int num;
-} Foo;
+} XFoo;
