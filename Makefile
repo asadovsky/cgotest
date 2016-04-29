@@ -15,7 +15,7 @@ build-archive: $(shell find go/src/cgo)
 	go build -buildmode=c-archive -o c/golib.a cgo
 	jiri go -target=amd64-ios build -buildmode=c-archive -tags=ios -o c/golib_amd64_ios.a cgo
 	jiri go -target=arm64-ios build -buildmode=c-archive -tags=ios -o c/golib_arm64_ios.a cgo
-	cp go/src/cgo/types.h c/
+	cp go/src/cgo/lib.h c/
 
 # To run the .so version of c-main:
 #   LD_LIBRARY_PATH=./c DYLD_LIBRARY_PATH=./c ./c/main
@@ -29,4 +29,4 @@ c-main-archive: c/main.c build-archive
 
 .PHONY: clean
 clean:
-	rm -rf c/golib* c/main c/types.h
+	rm -rf c/golib* c/main c/lib.h

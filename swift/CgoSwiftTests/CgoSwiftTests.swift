@@ -45,4 +45,19 @@ class CgoSwiftTests: XCTestCase {
     }
     print(echo("foo"))
   }
+
+  func testCFuncs() {
+    print(CSimpleFunc(2))
+    CStreamingFunc(2, {
+      print($0)
+    })
+    print(CAdd(5, 6))
+  }
+
+  func testGoStreamingFuncs() {
+    XStreamingFunc(5, { print($0); usleep(20000) })
+    XAsyncStreamingFunc(5, { print($0); usleep(20000) }, { print("OnDone") })
+    usleep(1000000)
+    XAsyncAdd(1, 2, { print($0) })
+  }
 }

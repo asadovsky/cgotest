@@ -7,15 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2E58727A1CC30D4C0067F342 /* golib_amd64_ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E5872771CC30D4C0067F342 /* golib_amd64_ios.a */; };
-		2E58727B1CC30D4C0067F342 /* golib_arm64_ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E5872781CC30D4C0067F342 /* golib_arm64_ios.a */; };
-		2E6194C31CC2CB1000858207 /* golib.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E6194BF1CC2CB1000858207 /* golib.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		2E6194C41CC2CB1000858207 /* types.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E6194C01CC2CB1000858207 /* types.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2E6194CA1CC2CE3800858207 /* Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E6194C91CC2CE3800858207 /* Types.swift */; };
 		2EB907971CC2CA50005880F0 /* CgoSwift.h in Headers */ = {isa = PBXBuildFile; fileRef = 2EB907961CC2CA50005880F0 /* CgoSwift.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2EB9079E1CC2CA50005880F0 /* CgoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EB907931CC2CA50005880F0 /* CgoSwift.framework */; };
 		2EB907A31CC2CA50005880F0 /* CgoSwiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB907A21CC2CA50005880F0 /* CgoSwiftTests.swift */; };
 		2EE9871B1CCED79500415477 /* Funcs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EE9871A1CCED79500415477 /* Funcs.swift */; };
+		2EE9872B1CD29D2A00415477 /* golib_amd64_ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EE987271CD29D2A00415477 /* golib_amd64_ios.a */; };
+		2EE9872C1CD29D2A00415477 /* golib_arm64_ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EE987281CD29D2A00415477 /* golib_arm64_ios.a */; };
+		2EE9872D1CD29D2A00415477 /* golib.h in Headers */ = {isa = PBXBuildFile; fileRef = 2EE987291CD29D2A00415477 /* golib.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2EE9872E1CD29D2A00415477 /* lib.h in Headers */ = {isa = PBXBuildFile; fileRef = 2EE9872A1CD29D2A00415477 /* lib.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,10 +29,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		2E5872771CC30D4C0067F342 /* golib_amd64_ios.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = golib_amd64_ios.a; path = ../../c/golib_amd64_ios.a; sourceTree = "<group>"; };
-		2E5872781CC30D4C0067F342 /* golib_arm64_ios.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = golib_arm64_ios.a; path = ../../c/golib_arm64_ios.a; sourceTree = "<group>"; };
-		2E6194BF1CC2CB1000858207 /* golib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = golib.h; path = ../../c/golib.h; sourceTree = "<group>"; };
-		2E6194C01CC2CB1000858207 /* types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = types.h; path = ../../c/types.h; sourceTree = "<group>"; };
 		2E6194C91CC2CE3800858207 /* Types.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Types.swift; sourceTree = "<group>"; };
 		2EB907931CC2CA50005880F0 /* CgoSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CgoSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2EB907961CC2CA50005880F0 /* CgoSwift.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CgoSwift.h; sourceTree = "<group>"; };
@@ -41,6 +37,10 @@
 		2EB907A21CC2CA50005880F0 /* CgoSwiftTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CgoSwiftTests.swift; sourceTree = "<group>"; };
 		2EB907A41CC2CA50005880F0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2EE9871A1CCED79500415477 /* Funcs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Funcs.swift; sourceTree = "<group>"; };
+		2EE987271CD29D2A00415477 /* golib_amd64_ios.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = golib_amd64_ios.a; path = ../../c/golib_amd64_ios.a; sourceTree = "<group>"; };
+		2EE987281CD29D2A00415477 /* golib_arm64_ios.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = golib_arm64_ios.a; path = ../../c/golib_arm64_ios.a; sourceTree = "<group>"; };
+		2EE987291CD29D2A00415477 /* golib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = golib.h; path = ../../c/golib.h; sourceTree = "<group>"; };
+		2EE9872A1CD29D2A00415477 /* lib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lib.h; path = ../../c/lib.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -48,8 +48,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2E58727B1CC30D4C0067F342 /* golib_arm64_ios.a in Frameworks */,
-				2E58727A1CC30D4C0067F342 /* golib_amd64_ios.a in Frameworks */,
+				2EE9872C1CD29D2A00415477 /* golib_arm64_ios.a in Frameworks */,
+				2EE9872B1CD29D2A00415477 /* golib_amd64_ios.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -85,11 +85,11 @@
 		2EB907951CC2CA50005880F0 /* CgoSwift */ = {
 			isa = PBXGroup;
 			children = (
-				2E5872771CC30D4C0067F342 /* golib_amd64_ios.a */,
-				2E5872781CC30D4C0067F342 /* golib_arm64_ios.a */,
+				2EE987271CD29D2A00415477 /* golib_amd64_ios.a */,
+				2EE987281CD29D2A00415477 /* golib_arm64_ios.a */,
 				2EB907961CC2CA50005880F0 /* CgoSwift.h */,
-				2E6194BF1CC2CB1000858207 /* golib.h */,
-				2E6194C01CC2CB1000858207 /* types.h */,
+				2EE987291CD29D2A00415477 /* golib.h */,
+				2EE9872A1CD29D2A00415477 /* lib.h */,
 				2EB907981CC2CA50005880F0 /* Info.plist */,
 				2EE9871A1CCED79500415477 /* Funcs.swift */,
 				2E6194C91CC2CE3800858207 /* Types.swift */,
@@ -113,8 +113,8 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2E6194C41CC2CB1000858207 /* types.h in Headers */,
-				2E6194C31CC2CB1000858207 /* golib.h in Headers */,
+				2EE9872E1CD29D2A00415477 /* lib.h in Headers */,
+				2EE9872D1CD29D2A00415477 /* golib.h in Headers */,
 				2EB907971CC2CA50005880F0 /* CgoSwift.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
