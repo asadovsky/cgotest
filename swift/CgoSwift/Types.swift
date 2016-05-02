@@ -3,6 +3,9 @@
 
 import Foundation
 
+typealias OnInt = Int32 -> ()
+typealias OnDone = () -> ()
+
 extension XString {
   init?(s: String) {
     // TODO: If possible, make one copy instead of two, e.g. using s.getCString.

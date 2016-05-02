@@ -23,15 +23,9 @@ class CgoSwiftTests: XCTestCase {
     print(a, err)
   }
 
-  func testEchoFoo() {
-    let arr = "arr".dataUsingEncoding(NSUTF8StringEncoding)!
-    print(try! echoFoo(Foo(str: "str", arr: arr, num: 42)))
-    do {
-      try echoFoo(Foo(str: "str", arr: arr, num: 0))
-      assert(false)
-    } catch let e {
-      print(e)
-    }
+  func testCFuncs() {
+    print(CSimpleFunc(2))
+    print(CAdd(5, 6))
   }
 
   func testIdiomatic() {
@@ -44,20 +38,30 @@ class CgoSwiftTests: XCTestCase {
       print(e)
     }
     print(echo("foo"))
+    let arr = "arr".dataUsingEncoding(NSUTF8StringEncoding)!
+    print(try! echoFoo(Foo(str: "str", arr: arr, num: 42)))
+    do {
+      try echoFoo(Foo(str: "str", arr: arr, num: 0))
+      assert(false)
+    } catch let e {
+      print(e)
+    }
   }
 
-  func testCFuncs() {
-    print(CSimpleFunc(2))
-    CStreamingFunc(2, {
-      print($0)
-    })
-    print(CAdd(5, 6))
-  }
-
-  func testGoStreamingFuncs() {
-    XStreamingFunc(5, { print($0); usleep(20000) })
-    XAsyncStreamingFunc(5, { print($0); usleep(20000) }, { print("OnDone") })
-    usleep(1000000)
-    XAsyncAdd(1, 2, { print($0) })
+  func testIdiomaticAsync() {
+    let n: Int32 = 5
+    var sum: Int32 = 0
+    var start = NSDate()
+    streamInts(n, onInt: { sum += $0 })
+    print("streamInts took ", NSDate().timeIntervalSinceDate(start))
+    XCTAssertEqual(sum, 10)
+    sum = 0
+    start = NSDate()
+    let done = expectationWithDescription("asyncStreamInts")
+    asyncStreamInts(n, onInt: { sum += $0 }, onDone: { print("asyncStreamInts took ", NSDate().timeIntervalSinceDate(start)); done.fulfill() })
+    waitForExpectationsWithTimeout(5) { error in
+      XCTAssertNil(error)
+      XCTAssertEqual(sum, 10)
+    }
   }
 }

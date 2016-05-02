@@ -40,11 +40,26 @@ typedef struct {
 ////////////////////////////////////////
 // Functions
 
-typedef void (*OnData)(int);
-typedef void (*OnDone)(void);
+// Callbacks are represented as struct {XHandle, f(XHandle, ...)} to allow for
+// currying RefMap handles to Swift closures.
+// https://forums.developer.apple.com/message/15725#15725
+
+typedef int XHandle;
+
+typedef struct {
+  XHandle h;
+  void (*f)(XHandle, int);
+} XIntCallback;
+
+typedef struct {
+  XHandle hOnInt;
+  XHandle hOnDone;
+  void (*onInt)(XHandle hOnInt, int);
+  void (*onDone)(XHandle hOnInt, XHandle hOnDone);
+} XStreamCallbacks;
 
 int CSimpleFunc(int);
-void CStreamingFunc(int, OnData);
+void CCallbackFunc(int, XIntCallback);
 
 // CAdd calls Cgo's XAdd, i.e. it's an example of how to export a pure C
 // function that wraps a Cgo function.

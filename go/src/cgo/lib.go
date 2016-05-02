@@ -2,19 +2,17 @@ package main
 
 import (
 	"errors"
-	"fmt"
-	"time"
 )
 
 /*
 #include <math.h>
 #include "lib.h"
 
-static void CallOnData(OnData onData, int x) {
-  onData(x);
+static void CallXIntCallback(XIntCallback cb, int x) {
+  cb.f(cb.h, x);
 }
-static void CallOnDone(OnDone onDone) {
-  onDone();
+static void CallXStreamCallbacksOnDone(XStreamCallbacks cbs) {
+  cbs.onDone(cbs.hOnInt, cbs.hOnDone);
 }
 */
 import "C"
@@ -85,26 +83,24 @@ func XEchoFoo(x C.XFoo, res *C.XFoo, e *C.XVError) {
 	res.init(C.GoStringN(x.str.p, x.str.n), C.GoBytes(x.arr.p, x.arr.n), int32((x.num)))
 }
 
-//export XStreamingFunc
-func XStreamingFunc(x int32, onData C.OnData) {
-	for i := 0; i < 5; i++ {
-		fmt.Println(time.Now())
-		C.CallOnData(onData, C.int(int32(i)*x))
+//export XStreamInts
+func XStreamInts(x int32, cb C.XIntCallback) {
+	for i := 0; i < int(x); i++ {
+		C.CallXIntCallback(cb, C.int(i))
 	}
-	fmt.Println(time.Now())
 }
 
-//export XAsyncStreamingFunc
-func XAsyncStreamingFunc(x int32, onData C.OnData, onDone C.OnDone) {
+//export XAsyncStreamInts
+func XAsyncStreamInts(x int32, cbs C.XStreamCallbacks) {
 	go func() {
-		XStreamingFunc(x, onData)
-		C.CallOnDone(onDone)
+		XStreamInts(x, C.XIntCallback{h: cbs.hOnInt, f: cbs.onInt})
+		C.CallXStreamCallbacksOnDone(cbs)
 	}()
 }
 
 //export XAsyncAdd
-func XAsyncAdd(a, b int32, onData C.OnData) {
+func XAsyncAdd(a, b int32, cb C.XIntCallback) {
 	go func() {
-		C.CallOnData(onData, C.int(XAdd(a, b)))
+		C.CallXIntCallback(cb, C.int(XAdd(a, b)))
 	}()
 }

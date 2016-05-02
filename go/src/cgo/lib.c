@@ -4,8 +4,8 @@ int CSimpleFunc(int x) {
   return 2 * x;
 }
 
-void CStreamingFunc(int x, OnData onData) {
-  onData(2 * x);
+void CCallbackFunc(int x, XIntCallback cb) {
+  cb.f(cb.h, 2 * x);
 }
 
 // From c/golib.h, which we can't include.
