@@ -1,8 +1,6 @@
 #ifndef CGO_LIB_H_
 #define CGO_LIB_H_
 
-#include <stdint.h>
-
 ////////////////////////////////////////
 // Structs
 

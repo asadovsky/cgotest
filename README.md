@@ -19,7 +19,7 @@ In both cases, we can also make the callback queue configurable instead of
 always using the main queue.
 
 References:
-https://golang.org/cmd/cgo/
-https://github.com/golang/go/wiki/cgo
-https://developer.apple.com/library/ios/documentation/Swift/Conceptual/BuildingCocoaApps/InteractingWithCAPIs.html
-http://oleb.net/blog/2015/06/c-callbacks-in-swift/
+- https://golang.org/cmd/cgo/
+- https://github.com/golang/go/wiki/cgo
+- https://developer.apple.com/library/ios/documentation/Swift/Conceptual/BuildingCocoaApps/InteractingWithCAPIs.html
+- http://oleb.net/blog/2015/06/c-callbacks-in-swift/
