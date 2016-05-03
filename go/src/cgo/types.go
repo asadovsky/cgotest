@@ -24,6 +24,12 @@ func (x *C.XString) init(s string) {
 	x.n = C.int(len(s))
 }
 
+// Frees the memory associated with this object.
+func (x *C.XString) toString() string {
+	defer x.free()
+	return C.GoStringN(x.p, x.n)
+}
+
 ////////////////////////////////////////
 // C.XBytes
 
@@ -36,6 +42,12 @@ func (x *C.XBytes) init(b []byte) {
 	x.n = C.int(len(b))
 }
 
+// Frees the memory associated with this object.
+func (x *C.XBytes) toBytes() []byte {
+	defer x.free()
+	return C.GoBytes(x.p, x.n)
+}
+
 ////////////////////////////////////////
 // C.XVError
 
@@ -44,6 +56,9 @@ func newXVError() *C.XVError {
 }
 
 func (x *C.XVError) init(e error) {
+	if e == nil {
+		return
+	}
 	x.id.init(string(verror.ErrorID(e)))
 	x.actionCode = C.uint(verror.Action(e))
 	x.msg.init(e.Error())

@@ -68,19 +68,18 @@ func XEcho(x C.XString, res *C.XString) {
 	// TODO: We may wish to move the freeing of inputs to a Swift-specific C or
 	// Cgo API, because for Java/JNI (unlike Swift) we may be able to avoid
 	// copying data passed from Java to C.
-	defer x.free()
-	res.init(C.GoStringN(x.p, x.n))
+	res.init(x.toString())
 }
 
 //export XEchoFoo
 func XEchoFoo(x C.XFoo, res *C.XFoo, e *C.XVError) {
 	// See TODO above.
-	defer x.free()
+	xStr := x.str.toString()
 	if x.num == 0 {
 		e.init(errors.New("num must be non-zero"))
 		return
 	}
-	res.init(C.GoStringN(x.str.p, x.str.n), C.GoBytes(x.arr.p, x.arr.n), int32((x.num)))
+	res.init(xStr, C.GoBytes(x.arr.p, x.arr.n), int32((x.num)))
 }
 
 //export XStreamInts
