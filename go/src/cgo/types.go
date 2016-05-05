@@ -12,6 +12,9 @@ import (
 */
 import "C"
 
+// TODO: Switch from C.CString to C.CBytes once C.CBytes is available.
+// https://github.com/golang/go/issues/14838
+
 ////////////////////////////////////////
 // C.XString
 
