@@ -51,10 +51,6 @@ func (x *C.XBytes) toBytes() []byte {
 ////////////////////////////////////////
 // C.XVError
 
-func newXVError() *C.XVError {
-	return (*C.XVError)(C.malloc(C.sizeof_XVError))
-}
-
 func (x *C.XVError) init(e error) {
 	if e == nil {
 		return

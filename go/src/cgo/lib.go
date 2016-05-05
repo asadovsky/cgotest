@@ -36,13 +36,13 @@ func XAddAndSubPtrs(a, b int32, add, sub *C.int) {
 var errDivByZero = errors.New("cannot divide by zero")
 
 //export XDiv
-func XDiv(a, b int32) (int32, *C.XVError) {
+func XDiv(a, b int32) (int32, C.XVError) {
 	if b == 0 {
-		e := newXVError()
+		e := C.XVError{}
 		e.init(errDivByZero)
 		return 0, e
 	}
-	return a / b, nil
+	return a / b, C.XVError{}
 }
 
 //export XDivPtrs
