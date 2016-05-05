@@ -3,7 +3,15 @@ GOPATH := $(shell pwd)/go:$(JIRI_ROOT)/release/go
 
 .DELETE_ON_ERROR:
 
-all: c-main-archive
+all: build-ios
+
+.PHONY: build-ios
+build-ios: $(shell find go/src/cgo)
+	go env GOPATH
+	jiri go -target=amd64-ios build -buildmode=c-archive -tags=ios -o c/golib_amd64_ios.a cgo
+	jiri go -target=arm64-ios build -buildmode=c-archive -tags=ios -o c/golib_arm64_ios.a cgo
+	cp c/golib_amd64_ios.h c/golib.h
+	cp go/src/cgo/lib.h c/
 
 .PHONY: build-shared
 build-shared: $(shell find go/src/cgo)
@@ -11,11 +19,7 @@ build-shared: $(shell find go/src/cgo)
 
 .PHONY: build-archive
 build-archive: $(shell find go/src/cgo)
-	go env GOPATH
 	go build -buildmode=c-archive -o c/golib.a cgo
-	jiri go -target=amd64-ios build -buildmode=c-archive -tags=ios -o c/golib_amd64_ios.a cgo
-	jiri go -target=arm64-ios build -buildmode=c-archive -tags=ios -o c/golib_arm64_ios.a cgo
-	cp go/src/cgo/lib.h c/
 
 # To run the .so version of c-main:
 #   LD_LIBRARY_PATH=./c DYLD_LIBRARY_PATH=./c ./c/main
