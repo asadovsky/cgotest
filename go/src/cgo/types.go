@@ -6,71 +6,63 @@ import (
 	"v.io/v23/verror"
 )
 
+// All "x.toFoo" methods free the memory associated with x.
+
 /*
 #include <stdlib.h>
+#include <string.h>
 #include "lib.h"
 */
 import "C"
 
-// TODO: Switch from C.CString to C.CBytes once C.CBytes is available.
-// https://github.com/golang/go/issues/14838
-
 ////////////////////////////////////////
 // C.XString
 
-func (x *C.XString) free() {
-	C.free(unsafe.Pointer(x.p))
-}
-
 func (x *C.XString) init(s string) {
-	x.p = C.CString(s)
 	x.n = C.int(len(s))
+	x.p = C.CString(s)
 }
 
-// Frees the memory associated with this object.
 func (x *C.XString) toString() string {
-	defer x.free()
+	defer C.free(unsafe.Pointer(x.p))
 	return C.GoStringN(x.p, x.n)
 }
 
 ////////////////////////////////////////
 // C.XBytes
 
-func (x *C.XBytes) free() {
-	C.free(x.p)
+func init() {
+	if C.sizeof_uint8_t != 1 {
+		panic(C.sizeof_uint8_t)
+	}
 }
 
 func (x *C.XBytes) init(b []byte) {
-	x.p = unsafe.Pointer(C.CString(string(b)))
 	x.n = C.int(len(b))
+	x.p = (*C.uint8_t)(C.malloc(C.size_t(len(b))))
+	C.memcpy(x.p, unsafe.Pointer(&b[0]), C.size_t(len(b)))
 }
 
-// Frees the memory associated with this object.
 func (x *C.XBytes) toBytes() []byte {
-	defer x.free()
+	defer C.free(x.p)
 	return C.GoBytes(x.p, x.n)
 }
 
 ////////////////////////////////////////
 // C.XVError
 
-func (x *C.XVError) init(e error) {
-	if e == nil {
+func (x *C.XVError) init(err error) {
+	if err == nil {
 		return
 	}
-	x.id.init(string(verror.ErrorID(e)))
-	x.actionCode = C.uint(verror.Action(e))
-	x.msg.init(e.Error())
-	x.stack.init(verror.Stack(e).String())
+	x.id.init(string(verror.ErrorID(err)))
+	x.actionCode = C.uint(verror.Action(err))
+	x.msg.init(err.Error())
+	x.stack.init(verror.Stack(err).String())
 }
 
 ////////////////////////////////////////
 // C.XFoo
-
-func (x *C.XFoo) free() {
-	x.str.free()
-	x.arr.free()
-}
 
 func (x *C.XFoo) init(str string, arr []byte, num int32) {
 	x.str.init(str)

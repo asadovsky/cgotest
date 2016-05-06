@@ -1,18 +1,20 @@
 #ifndef CGO_LIB_H_
 #define CGO_LIB_H_
 
+#include <stdint.h>
+
 ////////////////////////////////////////
 // Structs
 
 // string
 typedef struct {
-  const char* p;
+  char* p;
   int n;
 } XString;
 
 // []byte
 typedef struct {
-  const void* p;
+  uint8_t* p;
   int n;
 } XBytes;
 
