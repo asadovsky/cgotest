@@ -75,11 +75,12 @@ func XEcho(x C.XString, res *C.XString) {
 func XEchoFoo(x C.XFoo, res *C.XFoo, e *C.XVError) {
 	// See TODO above.
 	xStr := x.str.toString()
+	xArr := x.arr.toBytes()
 	if x.num == 0 {
 		e.init(errors.New("num must be non-zero"))
 		return
 	}
-	res.init(xStr, C.GoBytes(x.arr.p, x.arr.n), int32((x.num)))
+	res.init(xStr, xArr, int32((x.num)))
 }
 
 //export XStreamInts

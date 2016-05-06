@@ -18,7 +18,7 @@ extension XString {
     }
     let n = data.length
     data.getBytes(p, length: n)
-    self.p = UnsafePointer<Int8>(p)
+    self.p = UnsafeMutablePointer<Int8>(p)
     self.n = Int32(n)
   }
 
@@ -40,7 +40,7 @@ extension XBytes {
     }
     let n = data.length
     data.getBytes(p, length: n)
-    self.p = UnsafePointer<Void>(p)
+    self.p = UnsafeMutablePointer<UInt8>(p)
     self.n = Int32(n)
   }
 

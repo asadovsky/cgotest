@@ -40,12 +40,12 @@ func init() {
 func (x *C.XBytes) init(b []byte) {
 	x.n = C.int(len(b))
 	x.p = (*C.uint8_t)(C.malloc(C.size_t(len(b))))
-	C.memcpy(x.p, unsafe.Pointer(&b[0]), C.size_t(len(b)))
+	C.memcpy(unsafe.Pointer(x.p), unsafe.Pointer(&b[0]), C.size_t(len(b)))
 }
 
 func (x *C.XBytes) toBytes() []byte {
-	defer C.free(x.p)
-	return C.GoBytes(x.p, x.n)
+	defer C.free(unsafe.Pointer(x.p))
+	return C.GoBytes(unsafe.Pointer(x.p), x.n)
 }
 
 ////////////////////////////////////////
