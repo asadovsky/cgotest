@@ -3,29 +3,29 @@ import XCTest
 
 class CgoSwiftTests: XCTestCase {
   func testSimple() {
-    print(XAdd(2, 1))
-    print(XAddAndSub(2, 1))
+    print(x_Add(2, 1))
+    print(x_AddAndSub(2, 1))
     var a: Int32 = 0, b: Int32 = 0
-    XAddAndSubPtrs(2, 1, &a, &b)
+    x_AddAndSubPtrs(2, 1, &a, &b)
     print(a, b)
-    print(XSqrt(16))
+    print(x_Sqrt(16))
   }
 
   func testDiv() {
-    // Note, the function calls below leak XVError memory.
-    print(XDiv(6, 3))
+    // Note, the function calls below leak x_VError memory.
+    print(x_Div(6, 3))
     var a: Int32 = 0
-    var err = XVError()
-    XDivPtrs(6, 3, &a, &err)
+    var err = x_VError()
+    x_DivPtrs(6, 3, &a, &err)
     print(a, err)
-    print(XDiv(6, 0))
-    XDivPtrs(6, 0, &a, &err)
+    print(x_Div(6, 0))
+    x_DivPtrs(6, 0, &a, &err)
     print(a, err)
   }
 
   func testCFuncs() {
-    print(CSimpleFunc(2))
-    print(CAdd(5, 6))
+    print(c_SimpleFunc(2))
+    print(c_Add(5, 6))
   }
 
   func testIdiomatic() {

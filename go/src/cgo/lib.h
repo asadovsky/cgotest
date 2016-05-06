@@ -10,21 +10,21 @@
 typedef struct {
   char* p;
   int n;
-} XString;
+} x_String;
 
 // []byte
 typedef struct {
   uint8_t* p;
   int n;
-} XBytes;
+} x_Bytes;
 
 // verror.E
 typedef struct {
-  XString id;
+  x_String id;
   unsigned int actionCode;
-  XString msg;
-  XString stack;
-} XVError;
+  x_String msg;
+  x_String stack;
+} x_VError;
 
 // type Foo struct {
 //   str string
@@ -32,37 +32,37 @@ typedef struct {
 //   num int
 // }
 typedef struct {
-  XString str;
-  XBytes arr;
+  x_String str;
+  x_Bytes arr;
   int num;
-} XFoo;
+} x_Foo;
 
 ////////////////////////////////////////
 // Functions
 
-// Callbacks are represented as struct {XHandle, f(XHandle, ...)} to allow for
+// Callbacks are represented as struct {x_Handle, f(x_Handle, ...)} to allow for
 // currying RefMap handles to Swift closures.
 // https://forums.developer.apple.com/message/15725#15725
 
-typedef int XHandle;
+typedef int x_Handle;
 
 typedef struct {
-  XHandle h;
-  void (*f)(XHandle, int);
-} XIntCallback;
+  x_Handle h;
+  void (*f)(x_Handle, int);
+} x_IntCallback;
 
 typedef struct {
-  XHandle hOnInt;
-  XHandle hOnDone;
-  void (*onInt)(XHandle hOnInt, int);
-  void (*onDone)(XHandle hOnInt, XHandle hOnDone);
-} XStreamCallbacks;
+  x_Handle hOnInt;
+  x_Handle hOnDone;
+  void (*onInt)(x_Handle hOnInt, int);
+  void (*onDone)(x_Handle hOnInt, x_Handle hOnDone);
+} x_StreamCallbacks;
 
-int CSimpleFunc(int);
-void CCallbackFunc(int, XIntCallback);
+int c_SimpleFunc(int);
+void c_CallbackFunc(int, x_IntCallback);
 
-// CAdd calls Cgo's XAdd, i.e. it's an example of how to export a pure C
+// c_Add calls Cgo's x_Add, i.e. it's an example of how to export a pure C
 // function that wraps a Cgo function.
-int CAdd(int, int);
+int c_Add(int, int);
 
 #endif  // CGO_LIB_H_

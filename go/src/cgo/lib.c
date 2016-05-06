@@ -1,16 +1,16 @@
 #include "lib.h"
 
-int CSimpleFunc(int x) {
+int c_SimpleFunc(int x) {
   return 2 * x;
 }
 
-void CCallbackFunc(int x, XIntCallback cb) {
+void c_CallbackFunc(int x, x_IntCallback cb) {
   cb.f(cb.h, 2 * x);
 }
 
 // From c/golib.h, which we can't include.
-int XAdd(int, int);
+int x_Add(int, int);
 
-int CAdd(int a, int b) {
-  return XAdd(a, b);
+int c_Add(int a, int b) {
+  return x_Add(a, b);
 }

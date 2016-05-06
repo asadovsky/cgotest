@@ -6,7 +6,7 @@ import Foundation
 typealias OnInt = Int32 -> ()
 typealias OnDone = () -> ()
 
-extension XString {
+extension x_String {
   init?(s: String) {
     // TODO: If possible, make one copy instead of two, e.g. using s.getCString.
     guard let data = s.dataUsingEncoding(NSUTF8StringEncoding) else {
@@ -31,7 +31,7 @@ extension XString {
   }
 }
 
-extension XBytes {
+extension x_Bytes {
   // TODO: Use [UInt8] instead of NSData?
   init?(data: NSData) {
     let p = malloc(data.length)
@@ -54,7 +54,7 @@ extension XBytes {
 }
 
 // Note, we don't define init?(VError) since we never pass Swift VError objects to Go.
-extension XVError {
+extension x_VError {
   // Return value takes ownership of the memory associated with this object.
   func toVError() -> VError? {
     if id.p == nil {
@@ -67,12 +67,12 @@ extension XVError {
   }
 }
 
-extension XFoo {
+extension x_Foo {
   init?(f: Foo) {
-    guard let str = XString(s: f.str) else {
+    guard let str = x_String(s: f.str) else {
       return nil
     }
-    guard let arr = XBytes(data: f.arr) else {
+    guard let arr = x_Bytes(data: f.arr) else {
       return nil
     }
     self.init(str: str, arr: arr, num: f.num)
@@ -105,8 +105,8 @@ public struct VError: ErrorType {
   public let msg: String
   public let stack: String
 
-  static func maybeThrow<T>(@noescape f: UnsafeMutablePointer<XVError> -> T) throws -> T {
-    var e = XVError()
+  static func maybeThrow<T>(@noescape f: UnsafeMutablePointer<x_VError> -> T) throws -> T {
+    var e = x_VError()
     let res = f(&e)
     if let err = e.toVError() {
       throw err

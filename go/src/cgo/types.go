@@ -16,20 +16,20 @@ import (
 import "C"
 
 ////////////////////////////////////////
-// C.XString
+// C.x_String
 
-func (x *C.XString) init(s string) {
+func (x *C.x_String) init(s string) {
 	x.n = C.int(len(s))
 	x.p = C.CString(s)
 }
 
-func (x *C.XString) toString() string {
+func (x *C.x_String) toString() string {
 	defer C.free(unsafe.Pointer(x.p))
 	return C.GoStringN(x.p, x.n)
 }
 
 ////////////////////////////////////////
-// C.XBytes
+// C.x_Bytes
 
 func init() {
 	if C.sizeof_uint8_t != 1 {
@@ -37,21 +37,21 @@ func init() {
 	}
 }
 
-func (x *C.XBytes) init(b []byte) {
+func (x *C.x_Bytes) init(b []byte) {
 	x.n = C.int(len(b))
 	x.p = (*C.uint8_t)(C.malloc(C.size_t(len(b))))
 	C.memcpy(unsafe.Pointer(x.p), unsafe.Pointer(&b[0]), C.size_t(len(b)))
 }
 
-func (x *C.XBytes) toBytes() []byte {
+func (x *C.x_Bytes) toBytes() []byte {
 	defer C.free(unsafe.Pointer(x.p))
 	return C.GoBytes(unsafe.Pointer(x.p), x.n)
 }
 
 ////////////////////////////////////////
-// C.XVError
+// C.x_VError
 
-func (x *C.XVError) init(err error) {
+func (x *C.x_VError) init(err error) {
 	if err == nil {
 		return
 	}
@@ -62,9 +62,9 @@ func (x *C.XVError) init(err error) {
 }
 
 ////////////////////////////////////////
-// C.XFoo
+// C.x_Foo
 
-func (x *C.XFoo) init(str string, arr []byte, num int32) {
+func (x *C.x_Foo) init(str string, arr []byte, num int32) {
 	x.str.init(str)
 	x.arr.init(arr)
 	x.num = C.int(num)
