@@ -5,6 +5,7 @@ import (
 )
 
 /*
+#cgo LDFLAGS: -lm
 #include <math.h>
 #include "lib.h"
 

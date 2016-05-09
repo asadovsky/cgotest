@@ -1,5 +1,5 @@
 SHELL := /bin/bash -euo pipefail
-GOPATH := $(shell pwd)/go:$(JIRI_ROOT)/release/go
+export GOPATH := $(shell pwd)/go:$(JIRI_ROOT)/release/go
 
 .DELETE_ON_ERROR:
 
@@ -30,8 +30,7 @@ c-main-shared: c/main.c c/lib.h build-shared
 	gcc -Wall -o c/main $< c/golib.so
 
 .PHONY: c-main-archive
-c-main-archive: c/main.c c/lib.h build-archive
-	gcc -Wall -o c/main $< c/golib.a
+	gcc -Wall -o c/main $< c/golib.a -lm -lpthread
 
 .PHONY: clean
 clean:
