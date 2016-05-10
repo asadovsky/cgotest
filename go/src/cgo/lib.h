@@ -44,7 +44,7 @@ typedef struct {
 // currying RefMap handles to Swift closures.
 // https://forums.developer.apple.com/message/15725#15725
 
-typedef long x_Handle;
+typedef uint64_t x_Handle;
 
 typedef struct {
   x_Handle h;
