@@ -1,0 +1,27 @@
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+apply plugin: 'c'
+
+repositories {
+    mavenCentral()
+}
+
+task generateJniHeaders(type:Exec) {
+    def classpath = sourceSets.main.output.classesDir
+    commandLine 'javah', '-d', 'src/native/include', '-classpath', classpath, rootProject.name
+
+    dependsOn classes
+}
+
+tasks.withType(Test) {
+    systemProperty 'java.library.path', '/usr/local/google/home/razvanm/github/asadovsky/cgotest/java/Cgo/src/native'
+}
+
+test {
+    environment 'LD_LIBRARY_PATH', '/usr/local/google/home/razvanm/github/asadovsky/cgotest/java/Cgo/src/native'
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+}
