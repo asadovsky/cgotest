@@ -14,15 +14,7 @@
 #include "golib.h"
 #include "Cgo.h"
 
-static JavaVM *jvm = NULL;
-
-static int init(JNIEnv *env)
-{
-    if (jvm == NULL) {
-        return (*env)->GetJavaVM(env, &jvm);
-    }
-    return 0;
-}
+static JavaVM *jvm;
 
 static JNIEnv *get_jni_env(JNIEnv *env)
 {
@@ -36,6 +28,12 @@ static JNIEnv *get_jni_env(JNIEnv *env)
         fprintf(stderr, "AttachCurrentThread error: %d\n", error);
     }
     return result;
+}
+
+JNIEXPORT jint JNI_OnLoad(JavaVM* vm, void* reserved)
+{
+    jvm = vm;
+    return JNI_VERSION_1_2;
 }
 
 /*
@@ -371,8 +369,6 @@ JNIEXPORT void JNICALL Java_Cgo_streamInts__ILCgo_00024IntStreamCallbacks_2
     on_done_args->obj = (*env)->NewGlobalRef(env, callbacks);
     on_done_args->method = on_done_id;
 
-    if (init(env) != 0) { return; }
-
     x_StreamCallbacks xcallbacks = {
         (long)on_value_args, (long)on_done_args, int_callback, done_callback
     };
@@ -402,8 +398,6 @@ JNIEXPORT void JNICALL Java_Cgo_addAsync
     args->obj = (*env)->NewGlobalRef(env, callback);
     args->method = on_value_id;
     args->free = 1;
-
-    if (init(env) != 0) { return; }
 
     x_IntCallback xcallback = {(long)args, int_callback};
     x_AsyncAdd(a, b, xcallback);
