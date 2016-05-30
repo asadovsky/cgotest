@@ -18,6 +18,12 @@ typedef struct {
   int n;
 } x_Bytes;
 
+// []string
+typedef struct {
+  x_String* p;
+  int n;
+} x_Strings;
+
 // verror.E
 typedef struct {
   x_String id;
