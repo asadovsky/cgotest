@@ -12,7 +12,7 @@ static void CallIntCallback(x_IntCallback cb, int x) {
   cb.f(cb.h, x);
 }
 static void CallStreamCallbacksOnDone(x_StreamCallbacks cbs) {
-  cbs.onDone(cbs.hOnInt, cbs.hOnDone);
+  cbs.onDone(cbs.h);
 }
 */
 import "C"
@@ -68,14 +68,14 @@ func x_Echo(x C.x_String, res *C.x_String) {
 	// TODO: We may wish to move the freeing of inputs to a Swift-specific C or
 	// Cgo API, because for Java/JNI (unlike Swift) we may be able to avoid
 	// copying data passed from Java to C.
-	res.init(x.toString())
+	res.init(x.extract())
 }
 
 //export x_EchoFoo
 func x_EchoFoo(x C.x_Foo, res *C.x_Foo, e *C.x_VError) {
 	// See TODO above.
-	xStr := x.str.toString()
-	xArr := x.arr.toBytes()
+	xStr := x.str.extract()
+	xArr := x.arr.extract()
 	if x.num == 0 {
 		e.init(errors.New("num must be non-zero"))
 		return
@@ -93,7 +93,7 @@ func x_StreamInts(x int32, cb C.x_IntCallback) {
 //export x_AsyncStreamInts
 func x_AsyncStreamInts(x int32, cbs C.x_StreamCallbacks) {
 	go func() {
-		x_StreamInts(x, C.x_IntCallback{h: cbs.hOnInt, f: cbs.onInt})
+		x_StreamInts(x, C.x_IntCallback{h: cbs.h, f: cbs.onInt})
 		C.CallStreamCallbacksOnDone(cbs)
 	}()
 }

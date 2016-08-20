@@ -46,11 +46,10 @@ typedef struct {
 ////////////////////////////////////////
 // Functions
 
-// Callbacks are represented as struct {x_Handle, f(x_Handle, ...)} to allow for
-// currying RefMap handles to Swift closures.
-// https://forums.developer.apple.com/message/15725#15725
+// Callbacks are represented as struct {x_Handle, f(x_Handle, ...), ...} to
+// allow for currying handles.
 
-typedef int x_Handle;
+typedef uintptr_t x_Handle;
 
 typedef struct {
   x_Handle h;
@@ -58,10 +57,9 @@ typedef struct {
 } x_IntCallback;
 
 typedef struct {
-  x_Handle hOnInt;
-  x_Handle hOnDone;
-  void (*onInt)(x_Handle hOnInt, int);
-  void (*onDone)(x_Handle hOnInt, x_Handle hOnDone);
+  x_Handle h;
+  void (*onInt)(x_Handle, int);
+  void (*onDone)(x_Handle);
 } x_StreamCallbacks;
 
 int c_SimpleFunc(int);

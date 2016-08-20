@@ -1,4 +1,4 @@
-// Note: Imported C structs have a default initializer in Swift that zero-initializes all fields.
+// Note: In Swift, default initializers for imported C structs zero-initialize all fields.
 // https://developer.apple.com/library/ios/releasenotes/DeveloperTools/RN-Xcode/Chapters/xc6_release_notes.html
 
 import Foundation
@@ -6,24 +6,28 @@ import Foundation
 typealias OnInt = Int32 -> ()
 typealias OnDone = () -> ()
 
+func mallocOrDie<T>(n: Int) -> UnsafeMutablePointer<T> {
+  let p = malloc(n)
+  if p == nil {
+    fatalError()
+  }
+  return unsafeBitCast(p, UnsafeMutablePointer<T>.self)
+}
+
+// All "x.extract" methods free the memory associated with x.
+
 extension x_String {
-  init?(s: String) {
+  init?(_ s: String) {
     // TODO: If possible, make one copy instead of two, e.g. using s.getCString.
     guard let data = s.dataUsingEncoding(NSUTF8StringEncoding) else {
       return nil
     }
-    let p = malloc(data.length)
-    if p == nil {
-      return nil
-    }
-    let n = data.length
-    data.getBytes(p, length: n)
-    self.p = UnsafeMutablePointer<Int8>(p)
-    self.n = Int32(n)
+    p = mallocOrDie(data.length)
+    n = Int32(data.length)
+    data.getBytes(p, length: data.length)
   }
 
-  // Return value takes ownership of the memory associated with this object.
-  func toString() -> String? {
+  func extract() -> String? {
     if p == nil {
       return nil
     }
@@ -33,19 +37,13 @@ extension x_String {
 
 extension x_Bytes {
   // TODO: Use [UInt8] instead of NSData?
-  init?(data: NSData) {
-    let p = malloc(data.length)
-    if p == nil {
-      return nil
-    }
-    let n = data.length
-    data.getBytes(p, length: n)
-    self.p = UnsafeMutablePointer<UInt8>(p)
-    self.n = Int32(n)
+  init?(_ data: NSData) {
+    p = mallocOrDie(data.length)
+    n = Int32(data.length)
+    data.getBytes(p, length: data.length)
   }
 
-  // Return value takes ownership of the memory associated with this object.
-  func toNSData() -> NSData? {
+  func extract() -> NSData? {
     if p == nil {
       return nil
     }
@@ -55,32 +53,31 @@ extension x_Bytes {
 
 // Note, we don't define init?(VError) since we never pass Swift VError objects to Go.
 extension x_VError {
-  // Return value takes ownership of the memory associated with this object.
-  func toVError() -> VError? {
+  func extract() -> VError? {
     if id.p == nil {
       return nil
     }
     // Take ownership of all memory before checking optionals.
-    let vId = id.toString(), vMsg = msg.toString(), vStack = stack.toString()
+    let vId = id.extract(), vMsg = msg.extract(), vStack = stack.extract()
     // TODO: Stop requiring id, msg, and stack to be valid UTF8?
     return VError(id: vId!, actionCode: actionCode, msg: vMsg!, stack: vStack!)
   }
 }
 
 extension x_Foo {
-  init?(f: Foo) {
-    guard let str = x_String(s: f.str) else {
+  init?(_ f: Foo) {
+    guard let str = x_String(f.str) else {
       return nil
     }
-    guard let arr = x_Bytes(data: f.arr) else {
+    guard let arr = x_Bytes(f.arr) else {
       return nil
     }
     self.init(str: str, arr: arr, num: f.num)
   }
 
-  func toFoo() -> Foo? {
+  func extract() -> Foo? {
     // Take ownership of all memory before checking optionals.
-    let vStr = str.toString(), vArr = arr.toNSData()
+    let vStr = str.extract(), vArr = arr.extract()
     if vStr == nil || vArr == nil {
       return nil
     }
@@ -108,7 +105,7 @@ public struct VError: ErrorType {
   static func maybeThrow<T>(@noescape f: UnsafeMutablePointer<x_VError> -> T) throws -> T {
     var e = x_VError()
     let res = f(&e)
-    if let err = e.toVError() {
+    if let err = e.extract() {
       throw err
     }
     return res

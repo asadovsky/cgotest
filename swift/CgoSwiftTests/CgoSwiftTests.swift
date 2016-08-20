@@ -29,13 +29,13 @@ class CgoSwiftTests: XCTestCase {
   }
 
   func testIdiomatic() {
-    print(addAndSub(3, b: 1))
-    print(try! div(9, b: 3))
+    print(addAndSub(3, 1))
+    print(try! divide(9, 3))
     do {
-      try div(9, b: 0)
+      try divide(9, 0)
       assert(false)
-    } catch let e {
-      print(e)
+    } catch {
+      print(error)
     }
     print(echo("foo"))
     let arr = "arr".dataUsingEncoding(NSUTF8StringEncoding)!
@@ -43,8 +43,8 @@ class CgoSwiftTests: XCTestCase {
     do {
       try echoFoo(Foo(str: "str", arr: arr, num: 0))
       assert(false)
-    } catch let e {
-      print(e)
+    } catch {
+      print(error)
     }
   }
 

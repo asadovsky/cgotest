@@ -6,7 +6,7 @@ import (
 	"v.io/v23/verror"
 )
 
-// All "x.toFoo" methods free the memory associated with x.
+// All "x.extract" methods free the memory associated with x.
 
 /*
 #include <stdlib.h>
@@ -23,7 +23,7 @@ func (x *C.x_String) init(s string) {
 	x.p = C.CString(s)
 }
 
-func (x *C.x_String) toString() string {
+func (x *C.x_String) extract() string {
 	if x.p == nil {
 		return ""
 	}
@@ -53,7 +53,7 @@ func (x *C.x_Bytes) init(b []byte) {
 	C.memcpy(unsafe.Pointer(x.p), unsafe.Pointer(&b[0]), C.size_t(x.n))
 }
 
-func (x *C.x_Bytes) toBytes() []byte {
+func (x *C.x_Bytes) extract() []byte {
 	if x.p == nil {
 		return nil
 	}
@@ -76,14 +76,14 @@ func (x *C.x_Strings) init(strs []string) {
 	}
 }
 
-func (x *C.x_Strings) toStrings() []string {
+func (x *C.x_Strings) extract() []string {
 	if x.p == nil {
 		return nil
 	}
 	defer C.free(unsafe.Pointer(x.p))
 	res := make([]string, x.n)
 	for i := 0; i < int(x.n); i++ {
-		res[i] = x.at(i).toString()
+		res[i] = x.at(i).extract()
 	}
 	return res
 }

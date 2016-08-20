@@ -16,7 +16,6 @@
 		2EE9872C1CD29D2A00415477 /* golib_arm64_ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EE987281CD29D2A00415477 /* golib_arm64_ios.a */; };
 		2EE9872D1CD29D2A00415477 /* golib.h in Headers */ = {isa = PBXBuildFile; fileRef = 2EE987291CD29D2A00415477 /* golib.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2EE9872E1CD29D2A00415477 /* lib.h in Headers */ = {isa = PBXBuildFile; fileRef = 2EE9872A1CD29D2A00415477 /* lib.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		2EE987301CD40CC000415477 /* RefMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EE9872F1CD40CC000415477 /* RefMap.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,7 +41,6 @@
 		2EE987281CD29D2A00415477 /* golib_arm64_ios.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = golib_arm64_ios.a; path = ../../c/golib_arm64_ios.a; sourceTree = "<group>"; };
 		2EE987291CD29D2A00415477 /* golib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = golib.h; path = ../../c/golib.h; sourceTree = "<group>"; };
 		2EE9872A1CD29D2A00415477 /* lib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lib.h; path = ../../c/lib.h; sourceTree = "<group>"; };
-		2EE9872F1CD40CC000415477 /* RefMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RefMap.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,7 +92,6 @@
 				2EE9872A1CD29D2A00415477 /* lib.h */,
 				2EB907981CC2CA50005880F0 /* Info.plist */,
 				2EE9871A1CCED79500415477 /* Funcs.swift */,
-				2EE9872F1CD40CC000415477 /* RefMap.swift */,
 				2E6194C91CC2CE3800858207 /* Types.swift */,
 			);
 			path = CgoSwift;
@@ -219,7 +216,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				2E6194CA1CC2CE3800858207 /* Types.swift in Sources */,
-				2EE987301CD40CC000415477 /* RefMap.swift in Sources */,
 				2EE9871B1CCED79500415477 /* Funcs.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
